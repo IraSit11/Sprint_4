@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,11 +11,12 @@ import java.time.Duration;
 
 public class PageMain {
     private WebDriver driver;
+    public static final String URL = "https://qa-scooter.praktikum-services.ru/";
 
     private By orderButtonTop = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[text()='Заказать']");
     private By orderButtonBottom = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
     private By cookieButton = By.xpath(".//button[text()='да все привыкли']");
-
+    private By importantQuestionTitle = By.className("Home_FourPart__1uthg");
     private By question(int index) {
         return By.xpath("(.//div[contains(@class, 'accordion__heading')])[" + index + "]");
     }
@@ -46,6 +48,11 @@ public class PageMain {
         driver.findElement(orderButtonBottom).click();
     }
 
+    public void scrollImportantQuestionTitle() {
+        WebElement element = driver.findElement(importantQuestionTitle);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+
     public String clickQuestion (int index) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(question(index)));
@@ -65,11 +72,15 @@ public class PageMain {
     }
 
     public void inputNumberOrder (String number) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(numberOrder));
         driver.findElement(numberOrder).click();
         driver.findElement(numberOrder).sendKeys(number);
     }
 
     public void clickGoButton () {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(goButton));
         driver.findElement(goButton).click();
     }
 

@@ -10,7 +10,11 @@ import java.time.Duration;
 public class PageStatusOrder {
     private WebDriver driver;
 
-    private By statusNotFound = By.xpath("html/body/div/div/div/div/img[@alt='Not found']");
+    private By statusNotFound = By.xpath(".//img[@alt='Not found']");
+
+    public PageStatusOrder (WebDriver driver){
+        this.driver = driver;
+    }
 
     public void checkSearchResult () {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
